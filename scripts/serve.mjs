@@ -136,7 +136,8 @@ const server = createServer(async (req, res) => {
 
     // Evita salir de dist/ (..%2f, rutas raras).
     const candidate = path.normalize(path.join(ROOT, urlPath));
-    if (!candidate.startsWith(ROOT)) {
+    const rootPrefix = ROOT.endsWith(path.sep) ? ROOT : ROOT + path.sep;
+    if (candidate !== ROOT && !candidate.startsWith(rootPrefix)) {
       await send404(req, res);
       return;
     }
